@@ -24,6 +24,7 @@ import (
 	"text/template"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
@@ -78,7 +79,7 @@ func main() {
 	shellOut("nginx")
 	for {
 		rateLimiter.Accept()
-		ingresses, err := ingClient.List(labels.Everything(), fields.Everything())
+		ingresses, err := ingClient.List(unversioned.ListOptions{})
 		if err != nil {
 			log.Printf("Error retrieving ingresses: %v", err)
 			continue
